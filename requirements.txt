@@ -1,0 +1,5 @@
+tk
+sounddevice
+numpy
+scipy
+matplotlib
