@@ -1,6 +1,6 @@
 # CMPT 365 Audio Demo
 
-![App Screenshot](resources/app_screenshot.png)
+<img src="resources/app_screenshot.png" alt="App Screenshot" width="200"/>
 
 This app is developed by **Undergrad Tutorial Journal** as a sample demo for **CMPT 365 Multimedia Systems** course to demonstrate audio digitization.
 
