@@ -119,8 +119,10 @@ class VoiceRecorderApp:
         if self.resampled_data is None:
             self.display_message("No resampled data to play!", "red")
             return
+        
+        upsampled_data = resample(self.resampled_data, int(len(self.resampled_data) * self.sampling_rate / self.resampled_rate))
 
-        sd.play(self.resampled_data, samplerate=int(self.resampled_rate))
+        sd.play(upsampled_data, samplerate=int(self.sampling_rate))
         sd.wait()
         self.display_message("Playing resampled audio.", "green")
 
