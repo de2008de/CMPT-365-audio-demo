@@ -16,6 +16,7 @@ class VoiceRecorderApp:
         self.original_audio_data = None
         self.resampled_data = None
         self.sampling_rate = 44100 
+        self.resampled_rate = self.sampling_rate
 
         gui_initializer(self, root)
 
@@ -89,20 +90,20 @@ class VoiceRecorderApp:
             self.display_message("No file loaded or recorded data available!", "red")
             return
         try:
-            new_rate = int(self.sampling_rate_entry.get())
+            self.resampled_rate = int(self.sampling_rate_entry.get())
             quantization = int(self.quantization_entry.get())
-            if new_rate <= 0 or not (1 <= quantization <= 16):
+            if self.resampled_rate <= 0 or not (1 <= quantization <= 16):
                 raise ValueError
         except ValueError:
             self.display_message("Invalid sampling rate or quantization bits.", "red")
             return
 
-        num_samples = int(len(self.original_audio_data) * new_rate / self.sampling_rate)
+        num_samples = int(len(self.original_audio_data) * self.resampled_rate / self.sampling_rate)
         self.resampled_data = resample(self.original_audio_data, num_samples, axis=0)
 
         self.resampled_data = self.quantizer.quantize(self.resampled_data, bits=quantization)
 
-        self.update_waveform(self.resampled_data, self.ax2, new_rate)
+        self.update_waveform(self.resampled_data, self.ax2, self.resampled_rate)
         self.display_message("Resampling complete!", "green")
 
     def play_original(self):
@@ -119,7 +120,7 @@ class VoiceRecorderApp:
             self.display_message("No resampled data to play!", "red")
             return
 
-        sd.play(self.resampled_data, samplerate=int(self.sampling_rate_entry.get()))
+        sd.play(self.resampled_data, samplerate=int(self.resampled_rate))
         sd.wait()
         self.display_message("Playing resampled audio.", "green")
 
