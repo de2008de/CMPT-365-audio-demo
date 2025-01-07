@@ -22,6 +22,12 @@ class VoiceRecorderApp:
 
     def display_message(self, message, color="black"):
         self.message_label.config(text=message, fg=color)
+    
+    def update_compressed_file_size_message(self, size, color="black"):
+        self.compressed_size_label.config(text=f"Compressed size (KB): {size}", fg=color)
+    
+    def update_original_file_size_message(self, size, color="black"):
+        self.original_file_size_label.config(text=f"Original File size (KB): {size}", fg=color)
 
     def set_buttons_state(self, state, exclude=None):
         if exclude is None:
@@ -83,6 +89,14 @@ class VoiceRecorderApp:
         self.update_waveform(self.audio_data, self.ax1, self.sampling_rate)
         self.display_message("Recording stopped!", "green")
 
+        # Estimate file size in KB
+        num_samples = int(len(self.original_audio_data))
+        num_channels = 1
+        original_quantization = 16  # Assume 16-bit quantization for original data
+        total_bits = num_samples * original_quantization * num_channels
+        file_size_kb = total_bits / 8 / 1024  # Convert bits to bytes, then to KB
+        self.update_original_file_size_message(file_size_kb)
+
         self.record_button.config(text="Record", command=self.toggle_recording, bg="red")
 
     def resample_wave_file(self):
@@ -102,6 +116,12 @@ class VoiceRecorderApp:
         self.resampled_data = resample(self.original_audio_data, num_samples, axis=0)
 
         self.resampled_data = self.quantizer.quantize(self.resampled_data, bits=quantization)
+
+        # Estimate file size in KB
+        num_channels = 1
+        total_bits = num_samples * quantization * num_channels
+        file_size_kb = total_bits / 8 / 1024  # Convert bits to bytes, then to KB
+        self.update_compressed_file_size_message(file_size_kb)
 
         self.update_waveform(self.resampled_data, self.ax2, self.resampled_rate)
         self.display_message("Resampling complete!", "green")

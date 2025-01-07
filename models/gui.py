@@ -26,6 +26,11 @@ def gui_initializer(self, root):
     self.sampling_rate_entry.insert(0, "44100")
     self.sampling_rate_entry.pack(pady=5)
 
+    self.original_file_size_label = tk.Label(root, text="Original File size (KB):", font=("TkDefaultFont", self.button_font_size)) 
+    self.compressed_size_label = tk.Label(root, text="Compressed size (KB):", font=("TkDefaultFont", self.button_font_size))
+    self.original_file_size_label.pack(pady=5)
+    self.compressed_size_label.pack(pady=5)
+
     self.quantization_label = tk.Label(root, text="Enter quantization bits (1 to 16):", font=("TkDefaultFont", self.button_font_size))
     self.quantization_label.pack(pady=5)
 
