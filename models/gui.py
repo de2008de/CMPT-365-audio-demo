@@ -53,12 +53,12 @@ def gui_initializer(self, root):
     self.ax1.set_title("Original Waveform")
     self.ax2.set_title("Resampled Waveform")
 
+    # Add a message label
+    self.message_label = tk.Label(root, text="", fg="black", font=("TkDefaultFont", self.button_font_size))
+    self.message_label.pack(pady=10)
+
     self.canvas = FigureCanvasTkAgg(self.fig, master=root)
     self.canvas.get_tk_widget().pack()
-
-    # Add a message label
-    self.message_label = tk.Label(root, text="", fg="black")
-    self.message_label.pack(pady=10)
 
     self.buttons = [
         self.record_button,

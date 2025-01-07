@@ -24,10 +24,10 @@ class VoiceRecorderApp:
         self.message_label.config(text=message, fg=color)
     
     def update_compressed_file_size_message(self, size, color="black"):
-        self.compressed_size_label.config(text=f"Compressed size (KB): {size}", fg=color)
+        self.compressed_size_label.config(text=f"Compressed size (KB): {size:.2f}", fg=color)
     
     def update_original_file_size_message(self, size, color="black"):
-        self.original_file_size_label.config(text=f"Original File size (KB): {size}", fg=color)
+        self.original_file_size_label.config(text=f"Original File size (KB): {size:.2f}", fg=color)
 
     def set_buttons_state(self, state, exclude=None):
         if exclude is None:
